@@ -1,36 +1,39 @@
 import Ember from 'ember';
 import bodymovin from 'bodymovin';
 
+function _convertToCSSPixel(number) {
+  if (number) {
+    return parseInt(number) + 'px';
+  } else {
+    return '100%';
+  }
+}
 export default Ember.Component.extend({
   classNames: ['lottie-animation'],
   attributeBindings: ['style'],
   classNameBindings: ['class'],
-  style: Ember.computed(function() {
-    return 'width: 800px; height: 500px; overflow: hidden; margin: 0 auto;';
+  style: Ember.computed('weight', 'height', function() {
+    let { width, height } = this.getProperties(['width', 'height']);
+    return `width: ${_convertToCSSPixel(width)}; height: ${_convertToCSSPixel(height)}; overflow: hidden;`;
   }),
-  init() {
-    this._super();
-    this.animation = bodymovin.loadAnimation({});
-    this.animation.renderer = 'svg';
-  },
+  loop: false,
+  autoplay: false,
   didInsertElement() {
     this._super();
+    let { loop, autoplay, path, animationData } = this.getProperties(['loop', 'autoplay', 'path', 'animationData']);
     this._options = {
       container: this.element,
       renderer: 'svg',
-      loop: true,
-      autoplay: true,
-      path: '/lottie-logo.json'
+      animationData,
+      loop,
+      autoplay,
+      path
     };
-    this.animation.path = '/lottie-logo.json';
-    // this.animation.play();
-    // this.animation = bodymovin.loadAnimation(this._options);
-    // this.animation.addEventListener('enterFrame', () => {
-    //
-    // });
+    this.animation = bodymovin.loadAnimation(this._options);
+    Ember.tryInvoke(this, 'didCreate', [this.animation]);
   },
   willDestroyElement() {
-    this.super();
+    this._super();
     this.animation.destroy();
   }
 });
