@@ -1,0 +1,3 @@
+[submodule "vendor/bodymovin"]
+	path = vendor/bodymovin
+	url = https://github.com/bodymovin/bodymovin.git
