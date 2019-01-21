@@ -1,5 +1,7 @@
-import Ember from 'ember';
-import bodymovin from 'bodymovin';
+import Component from '@ember/component';
+import { computed } from "@ember/object";
+import { tryInvoke } from '@ember/utils';
+import lottie from 'lottie-web';
 
 function _convertToCSSPixel(number) {
   if (number) {
@@ -8,11 +10,11 @@ function _convertToCSSPixel(number) {
     return '100%';
   }
 }
-export default Ember.Component.extend({
+export default Component.extend({
   classNames: ['lottie-animation'],
   attributeBindings: ['style'],
   classNameBindings: ['class'],
-  style: Ember.computed('weight', 'height', function() {
+  style: computed('weight', 'height', function() {
     let { width, height } = this.getProperties(['width', 'height']);
     return `width: ${_convertToCSSPixel(width)}; height: ${_convertToCSSPixel(height)}; overflow: hidden;`;
   }),
@@ -29,8 +31,8 @@ export default Ember.Component.extend({
       autoplay,
       path
     };
-    this.animation = bodymovin.loadAnimation(this._options);
-    Ember.tryInvoke(this, 'didCreate', [this.animation]);
+    this.animation = lottie.loadAnimation(this._options);
+    tryInvoke(this, 'didCreate', [this.animation]);
   },
   willDestroyElement() {
     this._super();
