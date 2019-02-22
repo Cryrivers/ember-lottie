@@ -1,6 +1,7 @@
 import Component from '@ember/component';
 import { computed } from "@ember/object";
 import { tryInvoke } from '@ember/utils';
+import { htmlSafe } from '@ember/string';
 import lottie from 'lottie-web';
 
 function _convertToCSSPixel(number) {
@@ -16,7 +17,7 @@ export default Component.extend({
   classNameBindings: ['class'],
   style: computed('weight', 'height', function() {
     let { width, height } = this.getProperties(['width', 'height']);
-    return `width: ${_convertToCSSPixel(width)}; height: ${_convertToCSSPixel(height)}; overflow: hidden;`;
+    return htmlSafe(`width: ${_convertToCSSPixel(width)}; height: ${_convertToCSSPixel(height)}; overflow: hidden;`);
   }),
   loop: false,
   autoplay: false,
