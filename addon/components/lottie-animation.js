@@ -15,7 +15,7 @@ export default Component.extend({
   classNames: ['lottie-animation'],
   attributeBindings: ['style'],
   classNameBindings: ['class'],
-  style: computed('weight', 'height', function() {
+  style: computed('width', 'height', function() {
     let { width, height } = this.getProperties(['width', 'height']);
     return htmlSafe(`width: ${_convertToCSSPixel(width)}; height: ${_convertToCSSPixel(height)}; overflow: hidden;`);
   }),
