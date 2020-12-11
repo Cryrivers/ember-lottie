@@ -1,32 +1,24 @@
-ember-lottie
-==============================================================================
+# ember-lottie
 
 Render After Effects animations natively with [Ember.js](https://www.emberjs.com) and [Lottie Web](http://airbnb.io/lottie/).
 
+## Compatibility
 
+- Ember.js v3.16 or above
+- Ember CLI v2.13 or above
+- Node.js v10 or above
 
-Compatibility
-------------------------------------------------------------------------------
-
-* Ember.js v3.7 or above
-* Ember CLI v3.7 or above
-
-
-Installation
-------------------------------------------------------------------------------
+## Installation
 
 ```
 ember install ember-lottie
 ```
 
-
-Usage
-------------------------------------------------------------------------------
+## Usage
 
 Simple example
 
 `Note: Height and width are optional`
-
 
 ```
 {{!-- app/templates/application.hbs --}}
@@ -34,7 +26,6 @@ Simple example
 <button {{action "play"}}>Play</button>
 <button {{action "pause"}}>Pause</button>
 ```
-
 
 ```
 // app/controllers/application.js
@@ -56,8 +47,10 @@ export default Controller.extend({
 });
 ```
 
+## Contributing
 
-License
-------------------------------------------------------------------------------
+See the [Contributing](CONTRIBUTING.md) guide for details.
+
+## License
 
 This project is licensed under the [MIT License](LICENSE.md).
