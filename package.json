@@ -40,7 +40,7 @@
     "ember-classic-decorator": "^2.0.0",
     "ember-cli": "~3.22.0",
     "ember-cli-dependency-checker": "^3.2.0",
-    "ember-cli-github-pages": "^0.2.1",
+    "ember-cli-github-pages": "^0.2.2",
     "ember-cli-inject-live-reload": "^2.0.2",
     "ember-cli-sri": "^2.1.1",
     "ember-cli-terser": "^4.0.0",
