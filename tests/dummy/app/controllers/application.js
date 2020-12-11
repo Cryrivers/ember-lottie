@@ -1,25 +1,35 @@
 import Controller from "@ember/controller";
+import { tracked } from "@glimmer/tracking";
+import { action } from "@ember/object";
 
-export default Controller.extend({
-  currentTime: 0,
-  totalTime: 0,
+export default class ApplicationController extends Controller {
+  @tracked
+  currentTime = 0;
 
-  actions: {
-    animationHandler(animation) {
-      this.animation = animation;
-      this.animation.addEventListener("enterFrame", (evt) => {
-        this.set("totalTime", evt.totalTime.toFixed(3));
-        this.set("currentTime", evt.currentTime.toFixed(3));
-      });
-    },
-    play() {
-      this.animation && this.animation.play();
-    },
-    pause() {
-      this.animation && this.animation.pause();
-    },
-    rewind() {
-      this.animation && this.animation.goToAndPlay(0, true);
-    },
-  },
-});
+  @tracked
+  totalTime = 0;
+
+  @action animationHandler(animation) {
+    console.log("animatino handler!");
+    this.animation = animation;
+    this.animation.addEventListener("enterFrame", (evt) => {
+      this.set("totalTime", evt.totalTime.toFixed(3));
+      this.set("currentTime", evt.currentTime.toFixed(3));
+    });
+  }
+
+  @action
+  play() {
+    this.animation && this.animation.play();
+  }
+
+  @action
+  pause() {
+    this.animation && this.animation.pause();
+  }
+
+  @action
+  rewind() {
+    this.animation && this.animation.goToAndPlay(0, true);
+  }
+}

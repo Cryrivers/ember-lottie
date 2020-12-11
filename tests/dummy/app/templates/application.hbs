@@ -1,12 +1,13 @@
 <div class="demo">
-  {{lottie-animation
-    class="demo__animation"
-    width=660
-    height=100
-    path="bodymovin.json"
-    loop=true
-    didCreate=(action "animationHandler")
-  }}
+  <LottieAnimation
+    @class="demo__animation"
+    @width={{660}}
+    @height={{100}}
+    @path="bodymovin.json"
+    @autoplay={{true}}
+    @loop={{true}}
+    @didCreate={{this.animationHandler}}
+  />
 
   <div class="demo__controls">
     <button {{action "rewind"}}>
