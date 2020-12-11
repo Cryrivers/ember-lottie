@@ -1,5 +1,7 @@
+import classic from 'ember-classic-decorator';
+import { classNames, attributeBindings, classNameBindings } from '@ember-decorators/component';
+import { computed } from '@ember/object';
 import Component from '@ember/component';
-import { computed } from "@ember/object";
 import { tryInvoke } from '@ember/utils';
 import { htmlSafe } from '@ember/string';
 import lottie from 'lottie-web';
@@ -11,19 +13,23 @@ function _convertToCSSPixel(number) {
     return '100%';
   }
 }
-export default Component.extend({
-  classNames: ['lottie-animation'],
-  attributeBindings: ['style'],
-  classNameBindings: ['class'],
-  style: computed('width', 'height', function() {
+@classic
+@classNames('lottie-animation')
+@attributeBindings('style')
+@classNameBindings('class')
+export default class LottieAnimation extends Component {
+  @computed('width', 'height')
+  get style() {
     let { width, height } = this;
     return htmlSafe(`width: ${_convertToCSSPixel(width)}; height: ${_convertToCSSPixel(height)}; overflow: hidden;`);
-  }),
-  loop: false,
-  autoplay: false,
-  renderer: 'svg',
+  }
+
+  loop = false;
+  autoplay = false;
+  renderer = 'svg';
+
   didInsertElement() {
-    this._super();
+    super.didInsertElement();
     let { loop, autoplay, path, animationData, renderer } = this;
     this._options = {
       container: this.element,
@@ -35,9 +41,10 @@ export default Component.extend({
     };
     this.animation = lottie.loadAnimation(this._options);
     tryInvoke(this, 'didCreate', [this.animation]);
-  },
+  }
+
   willDestroyElement() {
-    this._super();
+    super.willDestroyElement();
     this.animation.destroy();
   }
-});
+}
