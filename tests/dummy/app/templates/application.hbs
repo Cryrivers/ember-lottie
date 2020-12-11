@@ -1,26 +1,26 @@
 <div class="demo">
   <LottieAnimation
     @class="demo__animation"
+    @path="bodymovin.json"
     @width={{660}}
     @height={{100}}
-    @path="bodymovin.json"
     @autoplay={{true}}
     @loop={{true}}
     @didCreate={{this.animationHandler}}
   />
 
   <div class="demo__controls">
-    <button {{action "rewind"}}>
+    <button type="button" onclick={{fn this.rewind}}>
       <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24">
         <path d="M13 12l11-7v14l-11-7zm0 7V5L3 12l10 7zM0 18h3V6H0v12z"></path>
       </svg>
     </button>
-    <button {{action "play"}}>
+    <button type="button" onclick={{fn this.play}}>
       <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24">
         <path d="M3 22v-20l18 10-18 10z"></path>
       </svg>
     </button>
-    <button {{action "pause"}}>
+    <button type="button" onclick={{fn this.pause}}>
       <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24">
         <path d="M11 22h-4v-20h4v20zm6-20h-4v20h4v-20z"></path>
       </svg>

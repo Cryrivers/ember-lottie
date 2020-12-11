@@ -13,8 +13,8 @@ export default class ApplicationController extends Controller {
     console.log("animatino handler!");
     this.animation = animation;
     this.animation.addEventListener("enterFrame", (evt) => {
-      this.set("totalTime", evt.totalTime.toFixed(3));
-      this.set("currentTime", evt.currentTime.toFixed(3));
+      this.totalTime = evt.totalTime.toFixed(3);
+      this.currentTime = evt.currentTime.toFixed(3);
     });
   }
 
