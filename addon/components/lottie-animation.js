@@ -21,12 +21,13 @@ export default Component.extend({
   }),
   loop: false,
   autoplay: false,
+  renderer: 'svg',
   didInsertElement() {
     this._super();
-    let { loop, autoplay, path, animationData } = this.getProperties(['loop', 'autoplay', 'path', 'animationData']);
+    let { loop, autoplay, path, animationData, renderer } = this.getProperties(['loop', 'autoplay', 'path', 'animationData', 'renderer']);
     this._options = {
       container: this.element,
-      renderer: 'svg',
+      renderer,
       animationData,
       loop,
       autoplay,
