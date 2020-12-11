@@ -90,6 +90,10 @@ export default class ApplicationController extends Controller {
 }
 ```
 
+## Demo
+
+[Demo of the above app](https://eelke.github.io/ember-lottie/)
+
 ## Contributing
 
 See the [Contributing](CONTRIBUTING.md) guide for details.
