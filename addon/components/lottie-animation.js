@@ -16,7 +16,7 @@ export default Component.extend({
   attributeBindings: ['style'],
   classNameBindings: ['class'],
   style: computed('width', 'height', function() {
-    let { width, height } = this.getProperties(['width', 'height']);
+    let { width, height } = this;
     return htmlSafe(`width: ${_convertToCSSPixel(width)}; height: ${_convertToCSSPixel(height)}; overflow: hidden;`);
   }),
   loop: false,
@@ -24,7 +24,7 @@ export default Component.extend({
   renderer: 'svg',
   didInsertElement() {
     this._super();
-    let { loop, autoplay, path, animationData, renderer } = this.getProperties(['loop', 'autoplay', 'path', 'animationData', 'renderer']);
+    let { loop, autoplay, path, animationData, renderer } = this;
     this._options = {
       container: this.element,
       renderer,
