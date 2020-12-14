@@ -1,39 +1,67 @@
-import Ember from 'ember';
-import bodymovin from 'bodymovin';
+import Component from "@ember/component";
+import {
+  tagName,
+  classNames,
+  attributeBindings,
+} from "@ember-decorators/component";
+import { tryInvoke } from "@ember/utils";
+import { htmlSafe } from "@ember/string";
+import { tracked } from "@glimmer/tracking";
+import lottie from "lottie-web";
 
 function _convertToCSSPixel(number) {
   if (number) {
-    return parseInt(number) + 'px';
+    return parseInt(number) + "px";
   } else {
-    return '100%';
+    return "100%";
   }
 }
-export default Ember.Component.extend({
-  classNames: ['lottie-animation'],
-  attributeBindings: ['style'],
-  classNameBindings: ['class'],
-  style: Ember.computed('weight', 'height', function() {
-    let { width, height } = this.getProperties(['width', 'height']);
-    return `width: ${_convertToCSSPixel(width)}; height: ${_convertToCSSPixel(height)}; overflow: hidden;`;
-  }),
-  loop: false,
-  autoplay: false,
+
+@tagName("div")
+@classNames("lottie-animation")
+@attributeBindings("style")
+export default class LottieAnimation extends Component {
+  @tracked
+  width;
+
+  @tracked
+  height;
+
+  @tracked
+  loop = false;
+
+  @tracked
+  autoplay = false;
+
+  @tracked
+  renderer = "svg";
+
+  get style() {
+    let { width, height } = this;
+    return htmlSafe(
+      `width: ${_convertToCSSPixel(width)};
+      height: ${_convertToCSSPixel(height)};
+      overflow: hidden;`
+    );
+  }
+
   didInsertElement() {
-    this._super();
-    let { loop, autoplay, path, animationData } = this.getProperties(['loop', 'autoplay', 'path', 'animationData']);
+    super.didInsertElement();
+    let { loop, autoplay, path, animationData, renderer } = this;
     this._options = {
       container: this.element,
-      renderer: 'svg',
+      renderer,
       animationData,
       loop,
       autoplay,
-      path
+      path,
     };
-    this.animation = bodymovin.loadAnimation(this._options);
-    Ember.tryInvoke(this, 'didCreate', [this.animation]);
-  },
+    this.animation = lottie.loadAnimation(this._options);
+    tryInvoke(this, "didCreate", [this.animation]);
+  }
+
   willDestroyElement() {
-    this._super();
+    super.willDestroyElement();
     this.animation.destroy();
   }
-});
+}

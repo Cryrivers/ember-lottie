@@ -1,27 +1,103 @@
 # ember-lottie
 
-This README outlines the details of collaborating on this Ember addon.
+Render After Effects animations natively with [Ember.js](https://www.emberjs.com) and [Lottie Web](http://airbnb.io/lottie/).
+
+## Compatibility
+
+- Ember.js v3.16 or above
+- Ember CLI v2.13 or above
+- Node.js v10 or above
 
 ## Installation
 
-* `git clone <repository-url>` this repository
-* `cd ember-lottie`
-* `npm install`
-* `bower install`
+```
+ember install ember-lottie
+```
 
-## Running
+## Usage
 
-* `ember serve`
-* Visit your app at [http://localhost:4200](http://localhost:4200).
+Simple example. You can use the methods and subscribe to the events as described in the Lottie-web documentation: https://airbnb.io/lottie/#/web?id=usage
 
-## Running Tests
+`Note: Width, height, autoplay, loop are all optional`.
 
-* `npm test` (Runs `ember try:each` to test your addon against multiple Ember versions)
-* `ember test`
-* `ember test --server`
+```hbs
+{{!-- app/templates/application.hbs --}}
+<div class="demo">
+  <LottieAnimation
+    @class="demo__animation"
+    @path="bodymovin.json"
+    @width={{660}}
+    @height={{100}}
+    @autoplay={{true}}
+    @loop={{true}}
+    @didCreate={{this.animationHandler}}
+  />
 
-## Building
+  <div class="demo__controls">
+    <button type="button" onclick={{fn this.rewind}}>
+      Rewind
+    </button>
+    <button type="button" onclick={{fn this.play}}>
+      Play
+    </button>
+    <button type="button" onclick={{fn this.pause}}>
+      Pause
+    </button>
+  </div>
 
-* `ember build`
+  <div class="demo__progress">
+    Progress: {{this.currentTime}} of {{this.totalTime}}
+  </div>
+</div>
+```
 
-For more information on using ember-cli, visit [https://ember-cli.com/](https://ember-cli.com/).
+```js
+// app/controllers/application.js
+import Controller from "@ember/controller";
+import { tracked } from "@glimmer/tracking";
+import { action } from "@ember/object";
+
+export default class ApplicationController extends Controller {
+  @tracked
+  currentTime = 0;
+
+  @tracked
+  totalTime = 0;
+
+  @action animationHandler(animation) {
+    this.animation = animation;
+    this.animation.addEventListener("enterFrame", (evt) => {
+      // Note: .toFixed rounds the long floats to N decimals, you are not required to use this!
+      this.totalTime = evt.totalTime.toFixed(3);
+      this.currentTime = evt.currentTime.toFixed(3);
+    });
+  }
+
+  @action
+  play() {
+    this.animation && this.animation.play();
+  }
+
+  @action
+  pause() {
+    this.animation && this.animation.pause();
+  }
+
+  @action
+  rewind() {
+    this.animation && this.animation.goToAndPlay(0, true);
+  }
+}
+```
+
+## Demo
+
+[Demo of the above app](https://eelke.github.io/ember-lottie/)
+
+## Contributing
+
+See the [Contributing](CONTRIBUTING.md) guide for details.
+
+## License
+
+This project is licensed under the [MIT License](LICENSE.md).
